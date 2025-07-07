@@ -142,7 +142,7 @@
     <button type="submit">Generate</button>
   </form>
   
-  <% if (id) { %>
+  <% if (locals.id) { %>
     <div class="generated-url">
       <p>URL Generated:</p>
       <a href="<%= baseUrl %>/url/<%= id %>" target="_blank">
