@@ -2,19 +2,31 @@ const shortid = require("shortid");
 const URL = require("../models/url.model");
 
 const handleGenerateNewURL = async (req, res) => {
+  let shortId;
   const body = req.body;
   if (!body || !body.url) {
     return res.status(400).json({ error: "URL is required" });
   }
-  const shortId = shortid();
-  await URL.create({
-    shortID: shortId,
+  const existing = await URL.findOne({
     redirectURL: body.url,
-    visitHistory: [],
     createdBy: req.user.id,
   });
+  if (existing) {
+    shortId = existing.shortID;
+  } else {
+    shortId = shortid();
+
+    await URL.create({
+      shortID: shortId,
+      redirectURL: body.url,
+      visitHistory: [],
+      createdBy: req.user.id,
+    });
+  }
+
   const urls = await URL.find({ createdBy: req.user.id });
-  return res.render("home", { id: shortId, urls });
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
+  return res.render("home", { id: shortId, urls, baseUrl });
   //return res.status(200).json({id:shortId})
 };
 

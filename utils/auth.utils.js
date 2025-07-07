@@ -13,7 +13,7 @@ module.exports = {setUser, getUser}*/
 
 //Stateless authentication using JWT
 const jwt = require("jsonwebtoken")
-const SECRET = "Aaqib1@"
+const SECRET = process.env.JWT_SECRET
 
 const generateToken = (user) =>{
     const payload = {
