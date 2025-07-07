@@ -38,7 +38,11 @@ const handleGetAllURL = async (req, res) => {
     req.user.role === "normal"
       ? await URL.find({ createdBy: req.user.id })
       : await URL.find();
-  return res.render("home", { urls });
+  return res.render("home", {
+    id: null,
+    baseUrl: `${req.protocol}://${req.get("host")}`,
+    urls,
+  });
 };
 
 const handleAnalytics = async (req, res) => {
