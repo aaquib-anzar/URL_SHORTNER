@@ -7,9 +7,11 @@ const userRoutes = require("./router/url.route")
 const staticRoutes = require("./router/static.route")
 const{dbConnect} = require("./db_connect/url_db")
 const {checkForAuthentication, restrictTo} = require("./middlewares/auth")
+const dotenv = require("dotenv")
+
 
 const app = express()
-
+dotenv.config()
 app.set("view engine","ejs")
 app.set("views", path.join(__dirname, "views")); 
 app.use(express.urlencoded({extended:false}))// to parse the form data
@@ -22,6 +24,12 @@ app.use("/",staticRoutes)
 app.use("/auth",authRoutes)
 
 
-dbConnect()
 
-app.listen(PORT, () => console.log(`Server is connected at: ${PORT}`));
+
+app.listen(PORT, () => {
+    dbConnect()
+    console.log(`Server is connected at: ${PORT}`)});
+
+
+
+
