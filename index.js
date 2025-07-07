@@ -22,9 +22,9 @@ app.use(cookieParser());
 app.use(checkForAuthentication);
 
 // 🟢 Add this root route for Render health check
-app.get("/", (req, res) => {
+/*app.get("/", (req, res) => {
   res.send("✅ URL Shortener backend is running");
-});
+});*/
 
 app.use("/url", restrictTo(roles = ["normal", "admin"]), userRoutes);
 app.use("/", staticRoutes);

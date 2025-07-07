@@ -3,7 +3,7 @@ const{handleSignUpPage, handleLoginPage} = require("../controllers/static.contro
 const router = express.Router()
 
 
-router.get("/signup",handleSignUpPage)
+router.get("/",handleSignUpPage)
 router.get("/login",handleLoginPage)
 
 module.exports = router
