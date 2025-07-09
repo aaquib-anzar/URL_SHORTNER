@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(checkForAuthentication);
 
-app.use("/url", restrictTo(["normal", "admin"]), userRoutes);
+app.use("/url", restrictTo(roles=["normal", "admin"]), userRoutes);
 app.use("/", staticRoutes);
 app.use("/auth", authRoutes);
 
