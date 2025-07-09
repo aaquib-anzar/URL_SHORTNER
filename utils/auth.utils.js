@@ -21,7 +21,7 @@ const generateToken = (user) =>{
         email:user.email,
         role:user.role
     }
-    return jwt.sign(payload,SECRET)
+    return jwt.sign(payload,SECRET,{expiresIn:"1d"})
 }
 
 const verifyToken = (token) => {
