@@ -11,7 +11,6 @@ const { checkForAuthentication, restrictTo } = require("./middlewares/auth");
 dotenv.config();
 const app = express();
 
-// Use Render's port or fallback to 8000 locally
 const PORT = process.env.PORT || 8000;
 
 app.set("view engine", "ejs");
@@ -21,16 +20,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(checkForAuthentication);
 
-// 🟢 Add this root route for Render health check
-/*app.get("/", (req, res) => {
-  res.send("✅ URL Shortener backend is running");
-});*/
-
-app.use("/url", restrictTo(roles = ["normal", "admin"]), userRoutes);
+app.use("/url", restrictTo(["normal", "admin"]), userRoutes);
 app.use("/", staticRoutes);
 app.use("/auth", authRoutes);
 
-// ✅ Connect DB first, then start server
 dbConnect().then(() => {
   app.listen(PORT, () => {
     console.log(`🚀 Server is running at: ${PORT}`);

@@ -1,9 +1,11 @@
 const { verifyToken } = require("../utils/auth.utils");
 
 function checkForAuthentication(req, res, next) {
+  const publicPath = ["/", "/login"];
+  if (publicPath.includes(req.path)) {
+    return next();
+  }
   const cookieToken = req.cookies?.token;
-
-  if (!cookieToken) return next();
 
   const user = verifyToken(cookieToken);
 
